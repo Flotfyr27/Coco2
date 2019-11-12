@@ -14,13 +14,46 @@ abstract class AST{
 }
 
 class Start extends AST{
+
+	String s = "";
+	String indent = "	";
     public List<DataTypeDef> datatypedefs;
     Start(List<DataTypeDef> datatypedefs){
 	this.datatypedefs=datatypedefs;
     }
     public String translate(){
-	return "";
-	// You may start here by replacing this with something else
+	s+= "import java.util.*;\nabstract class AST{}\n\n";
+    for(DataTypeDef d: datatypedefs){
+        s+= "abstract class ";
+        s+= d.dataTypeName;
+        s+= " extends AST {\n";
+        s+= indent + "public abstract ";
+        s+= d.functionHead +" ;";
+        s+= "\n};\n\n";
+        for(Alternative a: d.alternatives){
+            s+= "class ";
+            s+= a.constructor + " extends "+ d.dataTypeName+"{\n" + indent;
+            for(Argument arg: a.arguments){
+                s+= arg.type+ " "+arg.name+";\n"+indent;
+            }
+            s+= a.constructor+"(";
+            for(Argument arg: a.arguments){
+                if(!(arg.equals(a.arguments.get(a.arguments.size()-1)))){
+                    s+= arg.type +" "+ arg.name+", " ;
+                } else {
+                    s+= arg.type +" "+ arg.name+")";
+                }
+            }
+            s+= "{";
+            for(Argument arg: a.arguments){
+                s+= "this." + arg.name + "=" + arg.name +"; ";
+            }
+            s+= "}\n" + indent;
+            s+= "public "+ d.functionHead+ a.code +"\n";
+            s+= "}\n\n";
+        }
+	}
+	return s;
     }
 }
 
