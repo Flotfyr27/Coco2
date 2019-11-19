@@ -1,4 +1,4 @@
-antlr4 = java -jar /usr/local/lib/antlr-4.7-complete.jar
+antlr4 = java -jar C:\Javalib\antlr-4.7.2-complete.jar
 SRCFILES = main.java AST.java
 GENERATED = cocoListener.java cocoBaseListener.java cocoParser.java cocoBaseVisitor.java cocoVisitor.java cocoLexer.java
 
@@ -15,9 +15,9 @@ test:	main.class
 	java main coco_input.txt > coco_output.java
 	cat coco_output.java
 
-test:	main.class
-	java main AST.java > AST_genarated.java
-	cat coco_output.java
+AST:	main.class
+	java main coco.coco > AST_generated.java
+	cat AST_generated.java
 
 bigtest:	main.class
 	java main example/interpreter.coco > example/interpreter.java

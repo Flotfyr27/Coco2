@@ -5,8 +5,7 @@ grammar coco;
 start   : dtd+=dataTypeDef+ EOF ;
 
 // definition of an algebraic data type
-dataTypeDef : 'DATA'
- name=ID 'WITH' fun=JAVACODE '=' as=alternatives ';' ; 
+dataTypeDef : 'DATA' name=ID 'WITH' fun=JAVACODE '=' as=alternatives ';' ; 
 
 // alternatives of an algebraic data type and concrete syntax for it. 
 alternatives : as+=alternative ('|' as+=alternative)* ;
@@ -19,4 +18,4 @@ argument  : type=ID name=ID ;
 ID	   : ('A'..'Z'|'a'..'z'|'_')('A'..'Z'|'a'..'z'|'_'|'0'..'9'|'<'|'>')* ;
 WHITESPACE : [ \n\t\r]+ -> skip;
 COMMENT    : '//'(~[\n])* -> skip;
-JAVACODE   : '{' ~[{}]* '}';  // allowing no further braces in code.
+JAVACODE   : '~' ~[~^]* '^';  // allowing no further braces in code.
