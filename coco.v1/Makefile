@@ -15,6 +15,10 @@ test:	main.class
 	java main coco_input.txt > coco_output.java
 	cat coco_output.java
 
+test:	main.class
+	java main AST.java > AST_genarated.java
+	cat coco_output.java
+
 bigtest:	main.class
 	java main example/interpreter.coco > example/interpreter.java
 	cd example ; make test
